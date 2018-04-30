@@ -1,0 +1,18 @@
+Select E.Fname,E.Lname,D.Dname,P.Pname,DL.Dlocation
+FROM Employee as E,Project as P,Department as D,Dept_locations as DL,Works_on as WO
+WHERE DL.Dlocation='Stafford' AND D.Dnumber=P.Dnum AND E.Ssn=WO.Essn
+
+
+
+select * from Department,Dept_locations where Department.Dnumber=Dept_locations.Dnumber
+
+
+select * from Employee as E,Project as P,Works_on as WO where P.Dnum=4 and WO.Essn=E.Ssn
+
+
+ ? Fname,Lname,Dlocation,Hours,Dno ((((? Dlocation='Stafford' (Dept_locations)) ? Dept_locations.Dnumber=Project.Dnum (Project) ) ? Project.Pnumber = Works_on.Pno (Works_on)) ? Works_on.Essn=Employee.Ssn (Employee))
+
+
+
+ 
+  ? Fname,Lname,Dlocation,Hours,Dno (? Employee.Dno=Dept_locations.Dnumber ((((((? Dlocation='Stafford' (Dept_locations)) ? Dept_locations.Dnumber=Project.Dnum (Project) ) ? Project.Pnumber = Works_on.Pno (Works_on)) ? Works_on.Essn=Employee.Ssn (Employee)))))

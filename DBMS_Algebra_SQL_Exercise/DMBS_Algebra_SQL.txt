@@ -1,0 +1,21 @@
+select Fname,Lname,Address,Bdate,Department.Dname,Department.Dnumber
+FROM Employee,Department
+
+
+select Fname,Lname,Address,Bdate,Department.Dname,Department.Dnumber
+FROM Employee,Department
+where Dname='Research' AND Dnumber=Dno
+
+? (TableName) //DÝREK BU KOMUT ÇALIÞMAZ HEPSÝNÝ ÇEKMEK ÝÇÝN BÜTÜN KOÞULLARI SAÐLAYACAK ARA_EKLER(Sigma Koþulu) YAZABÝLÝRSÝN
+? Dno<9 (Employee)
+
+
+? Bdate,Dependent_name,Relationship (? Gender='F' (Dependent))
+
+
+
+ ? Fname,Lname,Pnumber,Dnum,Bdate (((? Plocation='Stafford' (Project)) ? Project.Dnum=Department.Dnumber (Department)) ? Department.Mgr_ssn=Employee.Ssn (Employee))
+
+
+
+(? Bdate,Dependent_name,Relationship (? Gender='F' or Gender='M' (Dependent))) ? Dependent.Essn=Employee.Ssn (? Dno<9 Employee)
