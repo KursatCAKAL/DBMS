@@ -54,7 +54,8 @@ one).
 the names of all department managers who have no dependents.
 
 <h2>Answers</h2>
-
+<img src="https://raw.githubusercontent.com/KursatCAKAL/DBMS/master/1Answers.png">
+<img src="https://raw.githubusercontent.com/KursatCAKAL/DBMS/master/2Answers.png">
 
 <div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
  2
