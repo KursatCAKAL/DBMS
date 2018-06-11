@@ -58,99 +58,193 @@ the names of all department managers who have no dependents.
 <img src="https://raw.githubusercontent.com/KursatCAKAL/DBMS/master/2Answers.png">
 
 
-/*Answer 1*/
-Select *
-From employee as e,department as d
-Where e.dno=d.dnumber
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #888888">/*Answer 1*/</span>
+<span style="color: #008800; font-weight: bold">Select</span> <span style="color: #333333">*</span>
+<span style="color: #008800; font-weight: bold">From</span> employee <span style="color: #008800; font-weight: bold">as</span> e,department <span style="color: #008800; font-weight: bold">as</span> d
+<span style="color: #008800; font-weight: bold">Where</span> e.dno<span style="color: #333333">=</span>d.dnumber
 
-/*Answer 2*/
-select *
-from employee 
-order by Salary asc
+<span style="color: #888888">/*Answer 2*/</span>
+<span style="color: #008800; font-weight: bold">select</span> <span style="color: #333333">*</span>
+<span style="color: #008800; font-weight: bold">from</span> employee 
+<span style="color: #008800; font-weight: bold">order</span> <span style="color: #008800; font-weight: bold">by</span> Salary <span style="color: #008800; font-weight: bold">asc</span>
 
-/*Answer 3*/
-select *
-from employee 
-order by Salary dec
+<span style="color: #888888">/*Answer 3*/</span>
+<span style="color: #008800; font-weight: bold">select</span> <span style="color: #333333">*</span>
+<span style="color: #008800; font-weight: bold">from</span> employee 
+<span style="color: #008800; font-weight: bold">order</span> <span style="color: #008800; font-weight: bold">by</span> Salary <span style="color: #007020">dec</span>
 
-/*Answer 4*/
-select *
-from employee as e,project as p,works_on as w
-where e.Dno=5 and p.pnumber=w.pno and w.essn=e.ssn and p.pname='ProductX'
-having w.hours>10
+<span style="color: #888888">/*Answer 4*/</span>
+<span style="color: #008800; font-weight: bold">select</span> <span style="color: #333333">*</span>
+<span style="color: #008800; font-weight: bold">from</span> employee <span style="color: #008800; font-weight: bold">as</span> e,project <span style="color: #008800; font-weight: bold">as</span> p,works_on <span style="color: #008800; font-weight: bold">as</span> w
+<span style="color: #008800; font-weight: bold">where</span> e.Dno<span style="color: #333333">=</span><span style="color: #0000DD; font-weight: bold">5</span> <span style="color: #008800; font-weight: bold">and</span> p.pnumber<span style="color: #333333">=</span>w.pno <span style="color: #008800; font-weight: bold">and</span> w.essn<span style="color: #333333">=</span>e.ssn <span style="color: #008800; font-weight: bold">and</span> p.pname<span style="color: #333333">=</span><span style="background-color: #fff0f0">&#39;ProductX&#39;</span>
+<span style="color: #008800; font-weight: bold">having</span> w.hours<span style="color: #333333">&gt;</span><span style="color: #0000DD; font-weight: bold">10</span>
 
-/*Answer 4_Powered By Dname*/
-select *
-from employee as e,project as p,works_on as w
-where e.Dno=(select Dnumber from department where Dname='Research') and p.pnumber=w.pno and w.essn=e.ssn and p.pname='ProductX'
-having w.hours>10
+<span style="color: #888888">/*Answer 4_Powered By Dname*/</span>
+<span style="color: #008800; font-weight: bold">select</span> <span style="color: #333333">*</span>
+<span style="color: #008800; font-weight: bold">from</span> employee <span style="color: #008800; font-weight: bold">as</span> e,project <span style="color: #008800; font-weight: bold">as</span> p,works_on <span style="color: #008800; font-weight: bold">as</span> w
+<span style="color: #008800; font-weight: bold">where</span> e.Dno<span style="color: #333333">=</span>(<span style="color: #008800; font-weight: bold">select</span> Dnumber <span style="color: #008800; font-weight: bold">from</span> department <span style="color: #008800; font-weight: bold">where</span> Dname<span style="color: #333333">=</span><span style="background-color: #fff0f0">&#39;Research&#39;</span>) <span style="color: #008800; font-weight: bold">and</span> p.pnumber<span style="color: #333333">=</span>w.pno <span style="color: #008800; font-weight: bold">and</span> w.essn<span style="color: #333333">=</span>e.ssn <span style="color: #008800; font-weight: bold">and</span> p.pname<span style="color: #333333">=</span><span style="background-color: #fff0f0">&#39;ProductX&#39;</span>
+<span style="color: #008800; font-weight: bold">having</span> w.hours<span style="color: #333333">&gt;</span><span style="color: #0000DD; font-weight: bold">10</span>
 
-/*Answer 5*/
-select *
-from employee as e,project as p,works_on as w
-where e.Ssn=w.Essn and w.pno=p.pnumber and p.pname='ProductY'
-having w.Hours<20
+<span style="color: #888888">/*Answer 5*/</span>
+<span style="color: #008800; font-weight: bold">select</span> <span style="color: #333333">*</span>
+<span style="color: #008800; font-weight: bold">from</span> employee <span style="color: #008800; font-weight: bold">as</span> e,project <span style="color: #008800; font-weight: bold">as</span> p,works_on <span style="color: #008800; font-weight: bold">as</span> w
+<span style="color: #008800; font-weight: bold">where</span> e.Ssn<span style="color: #333333">=</span>w.Essn <span style="color: #008800; font-weight: bold">and</span> w.pno<span style="color: #333333">=</span>p.pnumber <span style="color: #008800; font-weight: bold">and</span> p.pname<span style="color: #333333">=</span><span style="background-color: #fff0f0">&#39;ProductY&#39;</span>
+<span style="color: #008800; font-weight: bold">having</span> w.Hours<span style="color: #333333">&lt;</span><span style="color: #0000DD; font-weight: bold">20</span>
 
-/*Answer 6*/
-select *
-from employee as e,dependent as d
-where e.ssn=d.essn and e.fname=d.dependent_name
+<span style="color: #888888">/*Answer 6*/</span>
+<span style="color: #008800; font-weight: bold">select</span> <span style="color: #333333">*</span>
+<span style="color: #008800; font-weight: bold">from</span> employee <span style="color: #008800; font-weight: bold">as</span> e,dependent <span style="color: #008800; font-weight: bold">as</span> d
+<span style="color: #008800; font-weight: bold">where</span> e.ssn<span style="color: #333333">=</span>d.essn <span style="color: #008800; font-weight: bold">and</span> e.fname<span style="color: #333333">=</span>d.dependent_name
 
-/*Answer 7*/
-SELECT *
-FROM Employee as E
-Where E.Superssn=(select Ssn from employee as S where S.Fname='Franklin' and S.Lname='Wong')
+<span style="color: #888888">/*Answer 7*/</span>
+<span style="color: #008800; font-weight: bold">SELECT</span> <span style="color: #333333">*</span>
+<span style="color: #008800; font-weight: bold">FROM</span> Employee <span style="color: #008800; font-weight: bold">as</span> E
+<span style="color: #008800; font-weight: bold">Where</span> E.Superssn<span style="color: #333333">=</span>(<span style="color: #008800; font-weight: bold">select</span> Ssn <span style="color: #008800; font-weight: bold">from</span> employee <span style="color: #008800; font-weight: bold">as</span> S <span style="color: #008800; font-weight: bold">where</span> S.Fname<span style="color: #333333">=</span><span style="background-color: #fff0f0">&#39;Franklin&#39;</span> <span style="color: #008800; font-weight: bold">and</span> S.Lname<span style="color: #333333">=</span><span style="background-color: #fff0f0">&#39;Wong&#39;</span>)
 
-/*Answer 8*/
-select *,SUM(w.hours)
-FROM Project as p,Works_on as w,Employee as e
-Where p.pnumber=w.pno and e.ssn=w.essn
-group by Pname
+<span style="color: #888888">/*Answer 8*/</span>
+<span style="color: #008800; font-weight: bold">select</span> <span style="color: #333333">*</span>,<span style="color: #008800; font-weight: bold">SUM</span>(w.hours)
+<span style="color: #008800; font-weight: bold">FROM</span> Project <span style="color: #008800; font-weight: bold">as</span> p,Works_on <span style="color: #008800; font-weight: bold">as</span> w,Employee <span style="color: #008800; font-weight: bold">as</span> e
+<span style="color: #008800; font-weight: bold">Where</span> p.pnumber<span style="color: #333333">=</span>w.pno <span style="color: #008800; font-weight: bold">and</span> e.ssn<span style="color: #333333">=</span>w.essn
+<span style="color: #008800; font-weight: bold">group</span> <span style="color: #008800; font-weight: bold">by</span> Pname
 
-/*Answer 9*/
-select *,Count(*)
-from employee as e,works_on as w,project as p
-where e.ssn=w.essn and p.pnumber=w.pno
-group by e.Fname
-having Count(*)>=(select Count(*) from project)
+<span style="color: #888888">/*Answer 9*/</span>
+<span style="color: #008800; font-weight: bold">select</span> <span style="color: #333333">*</span>,<span style="color: #008800; font-weight: bold">Count</span>(<span style="color: #333333">*</span>)
+<span style="color: #008800; font-weight: bold">from</span> employee <span style="color: #008800; font-weight: bold">as</span> e,works_on <span style="color: #008800; font-weight: bold">as</span> w,project <span style="color: #008800; font-weight: bold">as</span> p
+<span style="color: #008800; font-weight: bold">where</span> e.ssn<span style="color: #333333">=</span>w.essn <span style="color: #008800; font-weight: bold">and</span> p.pnumber<span style="color: #333333">=</span>w.pno
+<span style="color: #008800; font-weight: bold">group</span> <span style="color: #008800; font-weight: bold">by</span> e.Fname
+<span style="color: #008800; font-weight: bold">having</span> <span style="color: #008800; font-weight: bold">Count</span>(<span style="color: #333333">*</span>)<span style="color: #333333">&gt;=</span>(<span style="color: #008800; font-weight: bold">select</span> <span style="color: #008800; font-weight: bold">Count</span>(<span style="color: #333333">*</span>) <span style="color: #008800; font-weight: bold">from</span> project)
 
-/*Answer 10*/
-select *,Count(*)
-from employee as e,works_on as w,project as p
-where e.ssn=w.essn and p.pnumber=w.pno
-group by e.Fname
-having Count(*)=0
+<span style="color: #888888">/*Answer 10*/</span>
+<span style="color: #008800; font-weight: bold">select</span> <span style="color: #333333">*</span>,<span style="color: #008800; font-weight: bold">Count</span>(<span style="color: #333333">*</span>)
+<span style="color: #008800; font-weight: bold">from</span> employee <span style="color: #008800; font-weight: bold">as</span> e,works_on <span style="color: #008800; font-weight: bold">as</span> w,project <span style="color: #008800; font-weight: bold">as</span> p
+<span style="color: #008800; font-weight: bold">where</span> e.ssn<span style="color: #333333">=</span>w.essn <span style="color: #008800; font-weight: bold">and</span> p.pnumber<span style="color: #333333">=</span>w.pno
+<span style="color: #008800; font-weight: bold">group</span> <span style="color: #008800; font-weight: bold">by</span> e.Fname
+<span style="color: #008800; font-weight: bold">having</span> <span style="color: #008800; font-weight: bold">Count</span>(<span style="color: #333333">*</span>)<span style="color: #333333">=</span><span style="color: #0000DD; font-weight: bold">0</span>
 
-/*Answer 11*/
-select *,count(*),AVG(e.Salary)
-from department as d,employee as e
-where d.dnumber=e.dno 
-group by d.dname
+<span style="color: #888888">/*Answer 11*/</span>
+<span style="color: #008800; font-weight: bold">select</span> <span style="color: #333333">*</span>,<span style="color: #008800; font-weight: bold">count</span>(<span style="color: #333333">*</span>),<span style="color: #008800; font-weight: bold">AVG</span>(e.Salary)
+<span style="color: #008800; font-weight: bold">from</span> department <span style="color: #008800; font-weight: bold">as</span> d,employee <span style="color: #008800; font-weight: bold">as</span> e
+<span style="color: #008800; font-weight: bold">where</span> d.dnumber<span style="color: #333333">=</span>e.dno 
+<span style="color: #008800; font-weight: bold">group</span> <span style="color: #008800; font-weight: bold">by</span> d.dname
 
-/*Answer 12*/
-select *,Count(*)
-from employee as e,project as p,works_on as w
-where e.ssn=w.essn and p.Pnumber=w.Pno and P.Plocation='Houston' 
-  AND e.dno not in
-  (select Dnumber from Dept_Locations where Dlocation='Houston')
-group by e.Fname
-
-
-/*Answer 13*/
-select *,Count(*)
-from (employee as e join department as d) left outer join dependent as de on e.ssn=de.Essn
-where e.ssn=d.mgrssn and (de.essn IS NULL and de.dependent_name IS NULL)
-group by Fname
-
-/*Bot is no deparment manager and has not a dependent*/
-select *,Count(*)
-from (employee as e left outer join department as d on e.ssn=d.mgrssn) left outer join dependent as de on e.ssn=de.Essn
-group by Fname
+<span style="color: #888888">/*Answer 12*/</span>
+<span style="color: #008800; font-weight: bold">select</span> <span style="color: #333333">*</span>,<span style="color: #008800; font-weight: bold">Count</span>(<span style="color: #333333">*</span>)
+<span style="color: #008800; font-weight: bold">from</span> employee <span style="color: #008800; font-weight: bold">as</span> e,project <span style="color: #008800; font-weight: bold">as</span> p,works_on <span style="color: #008800; font-weight: bold">as</span> w
+<span style="color: #008800; font-weight: bold">where</span> e.ssn<span style="color: #333333">=</span>w.essn <span style="color: #008800; font-weight: bold">and</span> p.Pnumber<span style="color: #333333">=</span>w.Pno <span style="color: #008800; font-weight: bold">and</span> P.Plocation<span style="color: #333333">=</span><span style="background-color: #fff0f0">&#39;Houston&#39;</span> 
+  <span style="color: #008800; font-weight: bold">AND</span> e.dno <span style="color: #008800; font-weight: bold">not</span> <span style="color: #008800; font-weight: bold">in</span>
+  (<span style="color: #008800; font-weight: bold">select</span> Dnumber <span style="color: #008800; font-weight: bold">from</span> Dept_Locations <span style="color: #008800; font-weight: bold">where</span> Dlocation<span style="color: #333333">=</span><span style="background-color: #fff0f0">&#39;Houston&#39;</span>)
+<span style="color: #008800; font-weight: bold">group</span> <span style="color: #008800; font-weight: bold">by</span> e.Fname
 
 
-select *,Count(*)
-from (employee as e left outer join department as d on e.ssn=d.mgrssn) 
-left outer join dependent as de on e.ssn=de.Essn
-where de.essn IS NULL and d.dnumber IS NULL
-group by Fname
+<span style="color: #888888">/*Answer 13*/</span>
+<span style="color: #008800; font-weight: bold">select</span> <span style="color: #333333">*</span>,<span style="color: #008800; font-weight: bold">Count</span>(<span style="color: #333333">*</span>)
+<span style="color: #008800; font-weight: bold">from</span> (employee <span style="color: #008800; font-weight: bold">as</span> e <span style="color: #008800; font-weight: bold">join</span> department <span style="color: #008800; font-weight: bold">as</span> d) <span style="color: #008800; font-weight: bold">left</span> <span style="color: #008800; font-weight: bold">outer</span> <span style="color: #008800; font-weight: bold">join</span> dependent <span style="color: #008800; font-weight: bold">as</span> de <span style="color: #008800; font-weight: bold">on</span> e.ssn<span style="color: #333333">=</span>de.Essn
+<span style="color: #008800; font-weight: bold">where</span> e.ssn<span style="color: #333333">=</span>d.mgrssn <span style="color: #008800; font-weight: bold">and</span> (de.essn <span style="color: #008800; font-weight: bold">IS</span> <span style="color: #008800; font-weight: bold">NULL</span> <span style="color: #008800; font-weight: bold">and</span> de.dependent_name <span style="color: #008800; font-weight: bold">IS</span> <span style="color: #008800; font-weight: bold">NULL</span>)
+<span style="color: #008800; font-weight: bold">group</span> <span style="color: #008800; font-weight: bold">by</span> Fname
 
+<span style="color: #888888">/*Bot is no deparment manager and has not a dependent*/</span>
+<span style="color: #008800; font-weight: bold">select</span> <span style="color: #333333">*</span>,<span style="color: #008800; font-weight: bold">Count</span>(<span style="color: #333333">*</span>)
+<span style="color: #008800; font-weight: bold">from</span> (employee <span style="color: #008800; font-weight: bold">as</span> e <span style="color: #008800; font-weight: bold">left</span> <span style="color: #008800; font-weight: bold">outer</span> <span style="color: #008800; font-weight: bold">join</span> department <span style="color: #008800; font-weight: bold">as</span> d <span style="color: #008800; font-weight: bold">on</span> e.ssn<span style="color: #333333">=</span>d.mgrssn) <span style="color: #008800; font-weight: bold">left</span> <span style="color: #008800; font-weight: bold">outer</span> <span style="color: #008800; font-weight: bold">join</span> dependent <span style="color: #008800; font-weight: bold">as</span> de <span style="color: #008800; font-weight: bold">on</span> e.ssn<span style="color: #333333">=</span>de.Essn
+<span style="color: #008800; font-weight: bold">group</span> <span style="color: #008800; font-weight: bold">by</span> Fname
+
+
+<span style="color: #008800; font-weight: bold">select</span> <span style="color: #333333">*</span>,<span style="color: #008800; font-weight: bold">Count</span>(<span style="color: #333333">*</span>)
+<span style="color: #008800; font-weight: bold">from</span> (employee <span style="color: #008800; font-weight: bold">as</span> e <span style="color: #008800; font-weight: bold">left</span> <span style="color: #008800; font-weight: bold">outer</span> <span style="color: #008800; font-weight: bold">join</span> department <span style="color: #008800; font-weight: bold">as</span> d <span style="color: #008800; font-weight: bold">on</span> e.ssn<span style="color: #333333">=</span>d.mgrssn) 
+<span style="color: #008800; font-weight: bold">left</span> <span style="color: #008800; font-weight: bold">outer</span> <span style="color: #008800; font-weight: bold">join</span> dependent <span style="color: #008800; font-weight: bold">as</span> de <span style="color: #008800; font-weight: bold">on</span> e.ssn<span style="color: #333333">=</span>de.Essn
+<span style="color: #008800; font-weight: bold">where</span> de.essn <span style="color: #008800; font-weight: bold">IS</span> <span style="color: #008800; font-weight: bold">NULL</span> <span style="color: #008800; font-weight: bold">and</span> d.dnumber <span style="color: #008800; font-weight: bold">IS</span> <span style="color: #008800; font-weight: bold">NULL</span>
+<span style="color: #008800; font-weight: bold">group</span> <span style="color: #008800; font-weight: bold">by</span> Fname
+</pre></td></tr></table></div>
