@@ -1,5 +1,5 @@
 # DBMS
-Sample Questions
+<h2>Sample Questions </h2>
 
 1. Select fname, mnt,
 lname and dname of employees and the department each works n.
