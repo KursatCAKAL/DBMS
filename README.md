@@ -58,101 +58,7 @@ the names of all department managers who have no dependents.
 <img src="https://raw.githubusercontent.com/KursatCAKAL/DBMS/master/2Answers.png">
 
 
-<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #888888">/*Answer 1*/</span>
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #888888">/*Answer 1*/</span>
 <span style="color: #008800; font-weight: bold">Select</span> <span style="color: #333333">*</span>
 <span style="color: #008800; font-weight: bold">From</span> employee <span style="color: #008800; font-weight: bold">as</span> e,department <span style="color: #008800; font-weight: bold">as</span> d
 <span style="color: #008800; font-weight: bold">Where</span> e.dno<span style="color: #333333">=</span>d.dnumber
@@ -247,4 +153,4 @@ the names of all department managers who have no dependents.
 <span style="color: #008800; font-weight: bold">left</span> <span style="color: #008800; font-weight: bold">outer</span> <span style="color: #008800; font-weight: bold">join</span> dependent <span style="color: #008800; font-weight: bold">as</span> de <span style="color: #008800; font-weight: bold">on</span> e.ssn<span style="color: #333333">=</span>de.Essn
 <span style="color: #008800; font-weight: bold">where</span> de.essn <span style="color: #008800; font-weight: bold">IS</span> <span style="color: #008800; font-weight: bold">NULL</span> <span style="color: #008800; font-weight: bold">and</span> d.dnumber <span style="color: #008800; font-weight: bold">IS</span> <span style="color: #008800; font-weight: bold">NULL</span>
 <span style="color: #008800; font-weight: bold">group</span> <span style="color: #008800; font-weight: bold">by</span> Fname
-</pre></td></tr></table></div>
+</pre></div>
