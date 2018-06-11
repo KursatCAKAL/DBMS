@@ -1,0 +1,780 @@
+---------------------------------
+
+SELECT Dname,Dnumber,Pnumber,Fname,Lname,Address,Bdate
+FROM Employee,Department,Project
+WHERE Plocation='Stafford' AND Dnum=Dnumber AND mgrssn=Ssn
+
+//Starfford konumunda bulunan projelerde çalýþan employeeler
+---------------------------------
+---------------------------
+/*SELECT *,Count(*)
+FROM EMPLOYEE AS E,DEPARTMENT AS D
+WHERE Dno=Dnumber
+Group By Dnumber*/
+/*select *,count(*)
+from employee as e,dependent as d
+where e.ssn=d.essn
+group by fname*/
+
+/*select *,count(*) as Employee_Count
+from project as p,works_on as w
+where p.pnumber=w.pno
+group by pname*/
+
+departmentdaki employee sayýlarý
+employelerin baðýmlýlýk sayýlarý
+projelerdeki employee sayýlarý
+
+
+select *,count(*) as Employee_Count
+from project as p,works_on as w
+where p.pnumber=w.pno
+group by pname
+having count(*)>2
+2'den fazla çalýþaný olanlar
+---------------------------
+
+--------------------------------------------
+Select *,E.Fname,E.Lname
+FROM Employee AS E,Project as P,Works_on as W,Department as D
+WHERE D.Dnumber=5 and P.Dnum=D.Dnumber and E.Ssn=W.Essn and W.Pno=P.Pnumber
+/*Dnum=5 departmentý tarafýndan yönetilen projelerde çalýþan employeeleri getir.*/
+
+Select *
+FROM Employee left outer join Dependent on Ssn=Essn
+Where Dependent.Essn IS NULL
+/*Dependent'ý olmayan employeeleri getir.*/
+
+
+Select DISTINCT Fname,Lname,Ssn,Address,Pno,Hours
+FROM Employee as E left outer join Works_on as W on W.Essn=E.Ssn
+Group By Fname
+/*Aslýnda kimin bir projede çalýþmadýðýný görebileceðim joinlenmiþ yapýdýr bu.
+Sebebi ise soldakilerin hepsini koþulsuz bas diyo olmamdandýr.(LEFT OUTER JOÝN)
+Essn=Ssn koþulunu saðlayanlarý bas ama sol tafarta bu koþulu saðlama durumu olmayan karþýlýðý NULL olan deðerleri bile getir diyorum.
+Ve elde edilen sonuçtan Pno=null olanlarý seçip aslýnda hiç bir projede çalýþmayanlarý göstereceðim*/
+
+select DISTINCT Fname,Lname,Ssn,Address,Pno,Hours
+FROM Employee as E left outer join Works_on as W on W.Essn=E.Ssn
+Where Pno IS NULL
+Group By Fname
+/*NULL=NULL Avoided olduðu için IS kullanarak yaptým.*/
+Yani hiç bir bilmem neyi olmayan gibi yapýlarý böyle bir mantýk kullanarak getirebilirim.
+
+select DISTINCT Fname,Lname,Ssn,Address,Pno,Hours
+FROM Employee as E left outer join Works_on as W on W.Essn=E.Ssn
+Where Pno!=20 OR Pno IS NULL
+Group By Fname
+20 NOLU PROJE DIÞINDA ÇALIÞANLAR BÝRLEÞÝM HÝÇ BÝRÝNDE ÇALIÞMAYANLAR
+
+------------------------------------------
+
+-------------------
+USÝNG NOT
+OUT OF SET
+select * from employee where Employee.Ssn not in (select Essn
+from employee as e,dependent as d
+where e.Ssn=d.Essn)
+Dependent'ý olmayan employeeler
+-------------------
+
+
+--------------------
+USÝNG NOT
+OUT OF SET
+/*select * from employee where Employee.Ssn not in
+(select E.Ssn from employee as e,project as p,works_on as w
+where w.Essn=e.Ssn AND p.Pnumber=w.Pno
+)*/
+HÝÇ BÝR PROJE DE ÇALIÞMAYAN EMPLOYEE LER
+
+
+
+/*ÇALIÞMAZ*/ select Employee.Ssn from employee where not EXISTS
+/*ÇALIÞMAZ*/ (select E.Ssn from employee as e,project as p,works_on as w
+/*ÇALIÞMAZ*/ where w.Essn=e.Ssn AND p.Pnumber=w.Pno
+/*ÇALIÞMAZ*/ )
+----------------
+
+
+---------------------------------
+SELECT E.Lname,E.Address,E.Bdate,D.Dnumber,P.Pnumber,Count(*) as Cocuk_Sayisi,E.Salary
+FROM Employee as E,Project as P,Department as D,Dependent as De
+WHERE P.Plocation='Bellaire' AND P.Dnum=D.Dnumber AND E.Ssn=D.Mgrssn AND De.Essn=E.Ssn
+
+/*Bellaire konumunda bulunan projelerde çalýþan employeelerinden yönetici olanlarýn karþýsýna kaç çocuðu olduðunu maaþýný yaz
+--------------------------------------------
+
+--------------------------------
+/*SELECT E.Fname,E.Address,S.Fname as Yönetici_Ýsim,S.Address as Yönetici_adres
+FROM Employee as E,Employee as S
+WHERE E.Superssn=S.Ssn*/
+
+Supervisor gösterimi
+
+/*SELECT E.Fname,E.Address,S.Fname as Yönetici_Ýsim,S.Address as Yönetici_adres
+FROM Employee as E LEFT JOIN Employee as S ON E.Superssn=S.Ssn*/
+Join version
+
+SELECT S.Fname as Yönetici_Ýsim,S.Address as Yönetici_adres,E.Fname,E.Address,Count(*)
+FROM Employee as E LEFT JOIN Employee as S ON E.Superssn=S.Ssn
+Group by S.Fname
+Her supervisor'ýn sahip olduðu alt employee sayýsý
+--------------------------------
+
+------------------------------------
+Housten'de bulunan projede çalýþan ama sahip olduðu department'ýn housten'de firmasý bulunmayan kiþileri getir.
+SELECT E.Fname,E.Address,P.Pnumber,D.Dname
+FROM Employee as E,Project as P,Works_On as W,Department as D,Dept_Locations as DL
+WHERE P.Plocation='Houston' AND W.Pno=P.Pnumber AND W.Essn=E.Ssn AND D.Dnumber=E.Dno 
+      AND DL.Dlocation!='Houston' AND DL.Dnumber=D.Dnumber
+Group By E.Fname
+
+Houstende bulunan projede çalýþanlarý getir.
+SELECT E.Fname,E.Address,P.Pnumber,D.Dname
+FROM Employee as E,Project as P,Works_On as W,Department as D,Dept_Locations as DL
+WHERE P.Plocation='Houston' AND W.Pno=P.Pnumber AND W.Essn=E.Ssn AND D.Dnumber=E.Dno 
+Group By E.Fname
+----------------------------------
+
+----------------------------------
+Not Equal Kullanýmý
+
+SELECT E.Fname,E.Address,P.Pnumber,Count(*)
+FROM Employee as E,Project as P,Works_On as W
+WHERE P.Plocation='Houston' AND W.Pno=P.Pnumber AND W.Essn=E.Ssn
+Group By E.Fname
+Having Count(*)!=0
+
+SELECT E.Fname,E.Address,P.Pnumber,Count(*)
+FROM Employee as E,Project as P,Works_On as W
+WHERE P.Plocation='Houston' AND W.Pno=P.Pnumber AND W.Essn=E.Ssn
+Group By E.Fname
+Having Count(*)>=1
+------------------------------
+
+-------------------------------
+ SELECT *,Pnumber
+ FROM Project as P,Employee as E,Department as D,Works_on as W
+ WHERE E.Lname='Wong' AND E.Ssn=D.Mgrssn AND W.Pno=P.Pnumber AND W.Essn=E.Ssn
+/*Lname='Wong' olan kiþinin department yöneticisi olarak çalýþtýðý projeler.*/
+-------------------------------
+
+--------------------------------------------
+SELECT E.Fname,E.Ssn,P.Pnumber,SUM(W.Hours)
+FROM Employee as E,Project as P,Works_on as W
+WHERE E.Ssn=W.Essn AND W.Pno=P.Pnumber
+Group By E.Fname,P.Pnumber
+/*Her employeenin projede ne kadar vakit harcadýðý*/
+
+SELECT P.Pname,P.Pnumber,SUM(W.Hours)
+FROM Employee as E,Project as P,Works_on as W
+WHERE E.Ssn=W.Essn AND W.Pno=P.Pnumber
+Group By P.Pnumber
+/*Bir proje için bütün employeelerin o projeye ne kadar zaman harcadýðý*/
+--------------------------------------------
+
+
+
+-------------------------------
+SELECT E.Fname,E.Lname,E.Sex,D.dependent_name,D.Sex,D.Relationship
+FROM Employee as E,Dependent as D
+WHERE E.Ssn=D.Essn AND E.Fname=D.dependent_name AND E.Sex=D.Sex
+-------------------------------
+
+------------------------
+SELECT *,Count(*)
+FROM Employee as E,Dependent as D,Department as Dept
+WHERE E.Ssn=D.Essn AND Dept.Mgrssn=E.Ssn
+Group By Fname
+Having Count(*)=1
+
+1 Tane dependent'ý olan department managerlarý
+
+
+SELECT *,Count(*)
+FROM Employee as E,Dependent as D,Department as Dept
+WHERE E.Ssn=D.Essn AND Dept.Mgrssn=E.Ssn
+Group By Fname
+Having Count(*)!=1
+Dependent sayýsý 1 olmayan department yöneticileri
+--------------------
+
+
+--------------------------------------------------------------
+/*Lname='Smith' olan kiþinin
+Department yöneticisi olduðu departmanýnýn projeleri
+Ya da
+Normal iþçi olarak çalýþtýðý projeler
+.*/
+
+/*SELECT Pnumber
+FROM Project
+WHERE Pnumber IN 
+(SELECT Pnumber FROM Employee as E,Department as D ,Project
+ WHERE E.Dno=D.Dnumber AND E.Ssn=D.Mgrssn AND E.Lname='Smith')
+ OR
+ Pnumber IN
+ (Select Pno FROM Works_On,Employee Where Essn=Ssn AND Lname='Smith')*//*Bu smith'in department yöneticisi olduðu departmanýn projelerini listelemez*/
+
+/*SELECT *,Pnumber
+FROM Project as P,Employee as E,Department as D,Works_on as W
+WHERE E.Lname='Smith' AND ((E.Ssn=D.Mgrssn AND E.Dno=D.Dnumber) OR (W.Pno=P.Pnumber AND W.Essn=E.Ssn))
+Group by Pnumber*/ /*Bu smith'in department yöneticisi olduðu departmanýn projelerini listelemez*/
+
+
+/*SELECT Pnumber
+FROM Project
+WHERE Pnumber IN 
+(SELECT Pnumber 
+ FROM Employee as E,Department as D ,Project as P
+ WHERE E.Dno=D.Dnumber AND E.Ssn=D.Mgrssn AND P.Dnum=D.Dnumber AND E.Lname='Smith')
+ OR
+ Pnumber IN
+ (Select Pno FROM Works_On,Employee Where Essn=Ssn AND Lname='Smith')*/ /*Bu smith'in department yöneticisi olduðu departmanýn projelerini listeler çünkü "P.Dnum=D.Dnumber" koþulunu ekledik.*/
+ 
+/*SELECT *,Pnumber
+FROM Project as P,Employee as E,Department as D,Works_on as W
+WHERE E.Lname='Smith' AND ((E.Ssn=D.Mgrssn AND E.Dno=D.Dnumber AND P.Dnum=D.Dnumber) OR (W.Pno=P.Pnumber AND W.Essn=E.Ssn))
+Group by Pnumber*/ /*Bu smith'in department yöneticisi olduðu departmanýn projelerini listeler çünkü "P.Dnum=D.Dnumber" koþulunu ekledik.*/
+
+
+SELECT *,Pnumber
+FROM Project as P,Employee as E,Department as D,Works_on as W
+WHERE E.Lname='Smith' AND ((E.Ssn=D.Mgrssn AND P.Dnum=D.Dnumber) OR (W.Pno=P.Pnumber AND W.Essn=E.Ssn))
+Group by Pnumber
+
+Bir employeenin yöneticisi olduðu department'ý bulmak için "E.Dno=D.Dnumber" karþýlaþtýrmasýný yapmamýza gerek yok.
+
+ 
+--------------------------------------------------------------
+
+--------------------------------------------------------------
+SELECT *
+FROM Employee as E,Department as D,Project as P
+WHERE E.Dno=D.Dnumber AND E.Ssn=D.Mgrssn AND E.Lname='Smith' AND P.Dnum=D.Dnumber
+Smith'in department yöneticiliði yaptýðý departmanýn sahip olduðu projeleri listeler.
+--------------------------------------------------------------
+
+
+-------------------------------
+/*SELECT *
+FROM Project as P,Employee as E,Works_on as W,Department as D
+WHERE E.Lname='Smith' AND ((E.Ssn=D.Mgrssn) OR (W.Essn=E.Ssn AND W.Pno=P.Pnumber))*/
+
+/*(SELECT DISTINCT Fname,Lname,Plocation,Pname,Pnumber
+FROM PROJECT,DEPARTMENT,EMPLOYEE
+WHERE DNUM=DNUMBER AND Mgrssn=Ssn AND Lname='Smith')
+UNION
+(SELECT DISTINCT Fname,Lname,Plocation,Pname,Pnumber
+ FROM PROJECT,WORKS_ON,EMPLOYEE
+ WHERE Pnumber=Pno AND Essn=Ssn AND Lname='Smith')*/
+ 
+/* ÝKÝSÝDE Lname=smith olan ve projelerde department yöneticisi veya normal iþçi olarak çalýþýlan
+ proje nolarýný getiriyor.*/
+-------------------------------
+
+-------------------------------
+
+/*SELECT *
+FROM Employee,Department
+Order By Dname
+Her ismin karþýsýna her dep'i yazar çünkü castersien product*/
+
+/*SELECT *
+FROM Employee,Department
+Where Employee.Dno=Department.Dnumber
+Order By Dname
+Her ismin karþýsýna kendi departmanýný yazar çünkü filtreledik*/
+
+/*SELECT Dname,Dnumber,Mgrssn,Count(*) as ÝþçiSayýsý
+FROM Employee,Department
+Where Employee.Dno=Department.Dnumber
+Group By Dname
+Order By Dname
+Her depin karþýsýna kendi oradaki iþçi sayýsýný yazar çünkü filtreledik*/
+
+-------------------------------
+
+---------------------------------
+
+SELECT Fname,Employee.Lname,Address
+FROM Employee,Department
+WHERE Department.Dname='Research' AND Department.Dnumber=Employee.Dno
+//Research dep inde çalýþan employeeleri getir
+---------------------------------
+---------------------------------
+
+SELECT E.Fname,E.Lname,E.Dno,S.Fname,S.Lname,S.Address
+FROM Employee as E,Employee as S
+WHERE E.Superssn=S.Ssn
+//Employeenin supervisor'ýný getir
+---------------------------------
+
+
+---------------------------------
+Select *
+From employee,department
+Where Dname='Research' AND Dno=Dnumber
+//research departmanýndaki employeeleri getirir.
+---------------------------------
+---------------------------------
+
+Select *
+From employee,department
+//Cartesien Product Employee and Department
+---------------------------------
+
+---------------------------------
+select all salary
+from employee
+
+select distinct salary
+from employee
+//Eliminate duplicate tuple
+---------------------------------
+
+---------------------------------
+Select *
+from Project,Employee,Works_On
+WHERE Works_On.Essn=Employee.Ssn AND Project.Pnumber=Works_On.Pno
+//Her proje için o projede çalýþan employee bilgileri
+
+---------------------------------
+
+---------------------------------
+Select Dno,Dname,Fname
+FROM Employee,Department
+Where Department.Dnumber=Employee.Dno 
+/*//departmendaki employeeler*/
+---------------------------------
+
+
+
+---------------------------------
+Select Dno,Dname,Fname,Pname,Ssn,Pno
+FROM Employee,Department,Works_On,Project
+Where Department.Dnumber=Employee.Dno AND Works_On.Pno=Project.Pnumber AND Employee.Ssn=Works_On.Essn
+RELAX VERSÝON
+Select Dno,Dname,Fname,Pname,Ssn,Pno
+FROM Employee,Department,Works_on,Project
+Where Department.Dnumber=Employee.Dno AND Works_on.Pno=Project.Pnumber AND Employee.Ssn=Works_on.Essn
+/*//departmendaki employeelerin çalýþtýðý projeler*/
+---------------------------------
+
+
+
+---------------------------------
+(Select DISTINCT Pnumber
+FROM Project as P,Department as D,Employee as E
+WHERE P.Pnumber=D.Dnumber AND D.Mgr_ssn=E.Ssn AND E.Lname='Smith')
+
+UNION
+
+(Select DISTINCT Pnumber
+FROM Project as P,Employee as E,Works_on as W
+WHERE P.Pnumber=W.Pno AND E.Ssn=W.Essn AND E.Lname='Smith'
+)
+---------------------------------
+
+
+---------------------------------
+Select *
+FROM Employee
+WHERE Address Like '%Hous%'
+---------------------------------
+
+Select *
+FROM Employee
+Where (Salary between 30000 and 60000)
+
+---------------------------------
+
+---------------------------------
+Select Fname,Lname,Address,Pnumber,Pname,Salary*1.1 as Increased_S
+FROM Employee as E,Project as P,Works_on as W
+WHERE P.Pname='ProductX' AND E.Ssn=W.Essn AND P.Pnumber=W.Pno 
+
+/*ProductX isimli projede çalýþan employeelerin maaþlarýnýn zamlý halleri getiriliyor.*/
+
+---------------------------------
+
+---------------------------------
+Select DISTINCT Fname,Lname,Address,Salary*1.1 as Increased_S
+FROM Employee as E,Project as P,Works_on as W
+WHERE E.Ssn=W.Essn AND P.Pnumber=W.Pno 
+ORDER BY Fname Asc
+/*Projelerde çalýþan employeelerin maaþlarýnýn zamlý halleri getiriliyor.*/
+---------------------------------
+
+
+---------------------------------
+Select * from Employee
+where Super_ssn is null
+/*Yönetici*/
+Select * from Employee
+where Super_ssn is not null
+/*Yönetici hariç*/
+---------------------------------
+
+---------------------------------
+
+Select DISTINCT Pnumber,Pname,Plocation,Dnum
+FROM Project
+WHERE Pnumber IN 
+
+(Select Pnumber FROM Project,Department,Employee WHERE Mgrssn=Ssn AND Dno=Dnumber AND Lname='Smith')
+
+OR
+
+Pnumber IN
+
+(Select Pno
+FROM Works_on as W,Employee as E
+WHERE W.Essn=E.Ssn AND E.Lname='Smith'
+)
+
+/*Lname=Smith olan kiþinin yönettiði departmandaki projelerin
+  YADA
+  Lname=Smith olan kiþinin çalýþtýðý projelerin
+  
+  BÝRLEÞÝMÝNDE BULUNAN Projeler içinde bulunan projeleri getir*/
+
+-----------------------------------------
+
+----------------------------------------
+
+/*SELECT Fname,Lname
+FROM Employee AS E,Dependent AS D
+WHERE E.Fname=D.Dependent_name AND E.Sex=D.Sex AND E.Ssn=D.Essn*/
+
+/*Select E.Fname,E.Lname
+FROM Employee as E
+WHERE E.Ssn IN
+(SELECT Essn
+FROM DEPENDENT D
+WHERE D.Dependent_name=E.Fname AND D.Sex=E.Sex
+)*/
+Dependent'ý olan employee lerden bu employeenin ismi-cinsiyeti ve dependent'ýnýn ismi-cinsiyeti ayný olanlarý getir.
+----------------------------------------
+
+
+
+---------------------------------------
+
+
+/*Select Fname,Lname
+FROM Employee
+WHERE Exists(Select * from Dependent as D Where Ssn=D.Essn )*/
+
+
+Select DISTINCT Fname,Lname from Employee as E,Dependent as D Where E.Ssn=D.Essn
+
+Dependent'ý olan employeeler
+
+---------------------------------------
+
+---------------------------------------
+/*Select Fname,Lname,D.dependent_name from Employee as E,Dependent as D Where E.Ssn=D.Essn*/
+Employeelerin dependentlarý 
+---------------------------------------
+
+
+-----------------------------------------
+Select Fname,Lname,Dno
+FROM Employee as E,Department as D
+WHERE E.Ssn=D.Mgrssn /*AND D.Dnumber=E.Dno /*GEREKSÝZ*/*/
+Department yöneticilerini getir.
+-----------------------------------------
+
+-----------------------------------------
+Select Fname,Lname,Dno,Ssn
+FROM Employee
+WHERE Exists(Select * from Dependent as D Where Ssn=D.Essn )
+
+AND
+
+Exists(Select * from Department as Dep Where Dep.mgrssn=Ssn)
+Hem Department yöneticisi olan hem dependent'a sahip olan 
+-----------------------------------------
+
+----------------------------------------
+
+SELECT Pnumber,Pname
+FROM Project as P,Department as D
+WHERE P.Dnum=D.Dnumber AND D.Dnumber=5
+/*5 nolu department tarafýndan kontrol edilen projeler*/
+
+----------------------------------------
+----------------------------------------
+SELECT Pnumber,Pname,E.Fname,E.Lname
+FROM Project as P,Department as D,Employee as E,Works_on as W
+WHERE P.Dnum=D.Dnumber AND D.Dnumber=5 AND E.Ssn=W.Essn AND P.Pnumber=W.Pno
+/*5 nolu department tarafýndan kontrol edilen projelerde çalýþan employeelerin hepsi*/
+
+SELECT Fname,Lname
+FROM Employee AS E
+WHERE Not Exists((Select Pnumber FROM Project WHERE Dno=5) EXCEPT(Select pno FROM works_on as W WHERE E.Ssn=W.Essn))
+AYNISININ DÝÐER GÖSTERÝMÝ
+----------------------------------------
+
+---------------------------------------
+SELECT Lname,Fname
+FROM Employee
+WHERE NOT EXISTS
+(SELECT * FROM Works_on as B
+ WHERE (B.Pno IN 
+        (SELECT Pnumber FROM Project WHERE Dnum=5 
+         AND 
+         NOT EXISTS (SELECT * FROM Works_on as C WHERE C.Essn=Ssn AND C.Pno=B.Pno)
+        )
+       )
+)
+-----------------------------------------
+
+-----------------------------------------
+
+SELECT DISTINCT Essn
+FROM Works_on
+WHERE Pno in (1,2,3)
+Order BY Essn
+
+1,2,3 nolu projelerde çalýþan employee essn leri
+-----------------------------------------
+
+-----------------------------------------
+
+SELECT DISTINCT Essn,Fname,Lname,Pno
+FROM Works_on as W,Employee as E,Project as P
+WHERE Pno in (1,2,3) AND W.Pno=P.Pnumber AND W.Essn=E.Ssn
+ORDER BY Ssn Asc
+
+1,2,3 nolu projelerde çalýþan Employeele
+-----------------------------------------
+
+-----------------------------------------
+
+Select E.Fname AS Emp_Fname,E.Lname AS Emp_Lname,S.Fname AS Sup_Fname,S.Lname AS Sup_Lname
+FROM Employee as E,Employee as S
+WHERE E.Superssn=S.Ssn
+
+
+Select E.Fname AS Emp_Fname,E.Lname AS Emp_Lname,S.Fname AS Sup_Fname,S.Lname AS Sup_Lname,E.Ssn AS E_Ssn,S.Ssn AS Sup_Ssn
+FROM Employee as E,Employee as S
+WHERE E.Superssn=S.Ssn
+
+Employeelerin yöneticileri
+-----------------------------------------
+
+
+------------------------------------------
+SELECT Fname,Lname,Address
+FROM (Employee as E JOIN Department as D ON E.Dno=D.Dnumber)
+
+SELECT Fname,Lname,Address
+FROM (Employee as E JOIN Department as D WHERE E.Dno=D.Dnumber)/*YANLIÞ*/
+------------------------------------------
+
+--------------------------
+SELECT E.Fname,E.Lname,S.Fname,S.Lname
+FROM Employee as E LEFT OUTER JOIN Employee as S
+ON E.Superssn=S.Ssn
+ORDER BY S.Lname Asc
+---------------------------
+---------------------------
+
+Select Pname,Pnumber
+FROM ((Project JOIN Department ON Dnum=Dnumber))
+WHERE Plocation='Stafford'
+
+/*Stafford bölgesinde bulunan projeler*/ 
+-------------------------------
+
+---------------------------
+
+Select Fname,Lname,Pnumber,Address,Bdate,Ssn
+FROM ((Project JOIN Department ON Dnum=Dnumber) JOIN Employee ON Mgrssn=Ssn)
+WHERE Plocation='Stafford'
+
+/*Stafford bölgesinde bulunan projelerde çalýþan employeeler arasýndan o departmanýn yöneticisi
+olaný getir*/ 
+
+FARKLI VERSÝYONLAR
+
+SELECT *
+FROM Project as P,Department as D,Employee as E,Works_on as W
+WHERE Plocation='Stafford' AND P.Dnum=D.Dnumber AND E.Ssn=D.Mgrssn AND W.Essn=E.Ssn 
+
+SELECT DISTINCT Fname,Lname,Pnumber,Address,Bdate
+FROM Project as P,Department as D,Employee as E,Works_on as W
+WHERE Plocation='Stafford' AND P.Dnum=D.Dnumber AND E.Ssn=D.Mgrssn AND W.Essn=E.Ssn 
+
+---------------------------
+
+---------------------------------------------------------------------------------
+Aggregate Functions
+
+SELECT SUM(Salary) as Maaþlar_Toplamý,MAX(Salary) as En_Yüksek_Maaþ,AVG(Salary) as Ortalama_Maaþ
+FROM Employee
+
+SELECT SUM(Salary) as Maaþlar_Toplamý,MAX(Salary) as En_Yüksek_Maaþ,AVG(Salary) as Ortalama_Maaþ
+FROM (Employee JOIN DEPARTMENT ON Dno=Dnumber)
+WHERE Dname='Research'
+
+SELECT *
+FROM Employee as E,Department as D
+WHERE E.Dno=D.Dnumber
+
+SELECT COUNT(*)
+FROM Employee as E,Department as D
+WHERE E.Dno=D.Dnumber
+
+
+SELECT COUNT(*)
+FROM (EMPLOYEE as E JOIN DEPARTMENT as D)
+WHERE E.Dno=D.Dnumber AND D.Dname='Research'
+
+SELECT COUNT(*)
+FROM Employee as E,Department as D
+WHERE E.Dno=D.Dnumber AND D.Dname='Research'
+
+---------------------------------------------------------------------------------
+
+----------------------
+GROUP BY
+
+Select Dno,Count(*) as Toplam_Ýþçi,AVG(Salary)
+FROM Employee as E/*,Department as D*/
+/*WHERE E.Ssn=D.Mgrssn*/
+Group By Dno
+
+select *,Count(*)
+from employee as e,dependent as d
+where e.Ssn=d.Essn
+group by Fname
+order by Fname
+//HER Employee'nin sahip olduðu dependent sayýsýný veriyor.
+
+select Dname,AVG(Salary)
+FROM Department as D,Employee as E 
+Where D.Dnumber=E.Dno
+Group By Dname
+
+HER GRUBUNUN ÇALIÞANLARININ TOPLAM MAAÞLARINI ALIYOR.
+
+
+select *,COUNT(*)
+from Department AS D,Employee AS E
+WHERE D.Dnumber=E.Dno
+Group By dname
+Her departmanda çalýþan toplam iþçi sayýsýný veriyor.
+-----------------------
+
+-----------------------
+
+select Pnumber,Pname,COUNT(*)
+from Project as P,Works_on as W,Employee as E
+where P.Pnumber=W.Pno AND E.Ssn=W.Essn
+group by pnumber,pname
+
+
+Select Pnumber,Pname,Count(*)
+From (project join works_on)
+Where Pno=Pnumber
+group by Pnumber,Pname
+
+HER PROJENÝN KARÞISINA ORADA KAÇ ÝÞÇÝ ÇALIÞIYOR YAZ
+
+Select *,Count(*)
+From ((project as p join works_on as w on w.Pno=p.Pnumber) join employee as e on e.Ssn=w.Essn)
+Where Pno=Pnumber
+group by Pnumber,Pname
+Yukarýdakinin aynýsý
+-----------------------
+
+------------------------------
+HAVÝNG
+
+Select Pnumber,Pname,Count(*)
+From (project join works_on)
+Where Pno=Pnumber
+group by Pnumber,Pname
+having count(*)>2
+2 taneden fazla çalýþaný olan projeler
+
+select *,COUNT(*)
+from Department AS D,Employee AS E
+WHERE D.Dnumber=E.Dno
+Group By dname
+Having count(*)>=2
+2 taneden fazla çalýþaný olan departmentlarý buluyor.
+------------------------------
+
+
+---------------------
+select Dname,AVG(Salary)
+FROM (Department as D JOIN Employee as E ON D.Dnumber=E.Dno)
+Group By Dname
+
+
+select Dname,AVG(Salary)
+FROM Department as D,Employee as E 
+Where D.Dnumber=E.Dno
+Group By Dname
+
+HER GRUBUNUN ÇALIÞANLARININ TOPLAM MAAÞLARINI ALIYOR.
+------------------
+
+---------------------------
+select *
+FROM Department as D,Employee as E
+WHERE D.Dnumber=E.Dno 
+
+Her departman için ayrý ayrý o departmanda kimin çalýþtýðýný yazar.
+---------------------------
+
+------------------------------------------
+Select *,COUNT(*)
+FROM Department as D,(select * from Employee where salary>40000) as E_Temp 
+Where D.Dnumber=E_Temp.Dno
+Group By Dname
+
+Departmentlarý içerisindeki employeelerin 40.000 den fazla maaþ içeren durumlarýna göre grupla
+Ve bu departmentlar için bu koþulda kaç employee var karþýsýna yaz.
+------------------
+
+
+--------------------------------
+Elmasrinin Sunduðu Çözüm (NULL Gösteriyor)
+
+Select Dnumber,COUNT(*)
+FROM Department,Employee
+where Dnumber=Dno AND Salary>40000 AND (select Dno from Employee Group By Dno Having COUNT(*)>5)
+
+
+Benim Çözümüm
+
+Select *,Count(*)
+FROM Department as D,(select * from Employee where salary>=40000) as E_Temp 
+Where D.Dnumber=E_Temp.Dno 
+Group By Dname
+Having Count(*)>=2
+order by dname
+
+
+
+
+-----------------------------------
+
+
+/*With BigDepts(Dno) AS (select dno from employee group by dno having count(*)>5)
+
+Select *,Count(*)
+FROM Employee
+Where Salary>40000 AND Dno IN BigDepts
+Group by dno*/ /*HATALI*/
+
+
+
+
+
