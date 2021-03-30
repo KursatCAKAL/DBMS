@@ -154,3 +154,5 @@ the names of all department managers who have no dependents.
 <span style="color: #008800; font-weight: bold">where</span> de.essn <span style="color: #008800; font-weight: bold">IS</span> <span style="color: #008800; font-weight: bold">NULL</span> <span style="color: #008800; font-weight: bold">and</span> d.dnumber <span style="color: #008800; font-weight: bold">IS</span> <span style="color: #008800; font-weight: bold">NULL</span>
 <span style="color: #008800; font-weight: bold">group</span> <span style="color: #008800; font-weight: bold">by</span> Fname
 </pre></div>
+
+<a href="https://www.tutorialspoint.com/dbms/relational_algebra.htm" target="_blank">Relational Algebra</a>
